@@ -1,0 +1,11 @@
+/apis -> 백엔드와 연결 관련
+/assets -> 이미지 비디오 등 정적인 것
+/components -> 공통 컴포넌트
+/constants -> 상수
+/hooks -> 훅 함수
+/layouts -> header, footer
+/mocks -> 사용하지 않을 거 같음
+/stores -> 전역 상태
+/types -> 타입들
+/utils -> 잡다한 것
+/views -> 뷰
