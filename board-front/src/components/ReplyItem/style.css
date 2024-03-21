@@ -1,0 +1,54 @@
+.reply-list-item{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reply-list-item-top{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.reply-list-item-profile-box{
+    width: 30px;
+    height: 30px;
+}
+
+.reply-list-item-profile-image{
+    border-radius: 50% 50%;
+    width: 100%;
+    height: 100%;
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+}
+
+.reply-list-item-nickname{
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+.reply-list-item-divider{
+    color: rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+.reply-list-item-time{
+    color: rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 140%;
+}
+.reply-list-item-content{
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 140%;
+}
+.reply-list-item{
+
+}
