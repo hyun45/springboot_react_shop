@@ -1,3 +1,11 @@
+.icon-box{
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .icon-button{
     border-radius: 50% 50%;
     width: 24px;
@@ -29,4 +37,12 @@
 
 .expand-right-icon{
     background-image: url(assets/image/expand-right.png);
+}
+
+.logo-icon{
+    background-image: url(assets/image/logo.png);
+}
+
+.github-icon{
+    background-image: url(assets/image/github.png);
 }

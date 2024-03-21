@@ -6,6 +6,7 @@ import Top3Item from 'components/Top3Item';
 import ReplyItem from 'components/ReplyItem';
 import FavoriteItem from 'components/FavoriteItem';
 import InputBox from 'components/InputBox';
+import Footer from 'layouts/Footer';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         {top3BoardListMock.map(top3ListItem => <Top3Item top3ListItem={top3ListItem} />)}
       </div>
       {latestBoardListMock.map(boardListItem => <BoardItem boardListItem={boardListItem} />)}
+      <Footer />
     </>
   );
 }
