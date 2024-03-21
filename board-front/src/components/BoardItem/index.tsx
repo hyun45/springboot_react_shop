@@ -43,7 +43,7 @@ export default function BoardItem({ boardListItem }: Props) {
                 </div>    
                 <div className='board-list-item-bottom'>
                     <div className='board-list-item-counts'>
-                        {`❤ ${favoriteCount} - 💬 ${replyCount} - 👁‍🗨 ${viewCount}`}
+                        {`❤ ${favoriteCount} · 💬 ${replyCount} · 👁‍🗨 ${viewCount}`}
                     </div>
                 </div>    
             </div>
