@@ -39,10 +39,22 @@
     background-image: url(assets/image/expand-right.png);
 }
 
-.logo-icon{
-    background-image: url(assets/image/logo.png);
+.logo-white-icon{
+    background-image: url(assets/image/logo-white.png);
+}
+
+.logo-black-icon{
+    background-image: url(assets/image/logo-black.png);
+}
+
+.logo-color-icon{
+    background-image: url(assets/image/logo-color.png);
 }
 
 .github-icon{
     background-image: url(assets/image/github.png);
+}
+
+.search-icon{
+    background-image: url(assets/image/search.png);
 }

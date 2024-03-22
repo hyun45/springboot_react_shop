@@ -16,9 +16,9 @@ const onGithubIconButtonClickHandler = () => {
                 <div className='footer-top'>
                     <div className='footer-logo-box'>
                         <div className='icon-box'>
-                            <div className='icon logo-icon'></div>
+                            <div className='icon logo-color-icon'></div>
                         </div>
-                        <div className='footer-logo-text'>{'Hyuns Blog'}</div>
+                        <div className='footer-logo-text'>{`Hyun's Blog`}</div>
                     </div>
                     <div className='footer-link-box'>
                         <div className='footer-email-link'>{'hsb9743@naver.com'}</div>
