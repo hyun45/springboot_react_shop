@@ -14,7 +14,7 @@ public interface ResponseMessage {
     String NOT_EXISTED_BOARD = "Not existed Board.";
 
     // HTTP Status 401
-    String SIGN_IN_FAIL = "Sign in Failed.";
+    String LOGIN_FAIL = "Login Failed.";
     String AUTHORIZATION_FAIL = "Authorization Failed.";
 
     // HTTP Status 403

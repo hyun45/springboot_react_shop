@@ -6,10 +6,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.hyun.boardback.dto.request.auth.LoginRequestDto;
 import com.hyun.boardback.dto.request.auth.SignUpRequestDto;
 import com.hyun.boardback.dto.response.ResponseDto;
+import com.hyun.boardback.dto.response.auth.LoginResponseDto;
 import com.hyun.boardback.dto.response.auth.SignUpResponseDto;
 import com.hyun.boardback.entity.UserEntity;
+import com.hyun.boardback.provider.JwtProvider;
 import com.hyun.boardback.repository.UserRepository;
 import com.hyun.boardback.service.AuthService;
 
@@ -31,6 +34,8 @@ public class AuthServiceImplement implements AuthService{
     // public void setUserRepository(UserRepository userRepository){
     //     this.userRepository = userRepository;
     // }
+
+    private final JwtProvider jwtProvider;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -64,6 +69,32 @@ public class AuthServiceImplement implements AuthService{
         }
 
         return SignUpResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super LoginResponseDto> login(LoginRequestDto dto) {
+        
+        String token = null;
+
+        try {
+            String email = dto.getEmail();
+            UserEntity userEntity = userRepository.findByEmail(email);
+            if(userEntity == null) return LoginResponseDto.loginFail();
+
+            String password = dto.getPassword();
+            String encodedPassword = userEntity.getPassword();
+            boolean isMatched = passwordEncoder.matches(password, encodedPassword);
+
+            if(!isMatched) return LoginResponseDto.loginFail();
+
+            token = jwtProvider.create(email);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return LoginResponseDto.success(token);
     }
     
 }
