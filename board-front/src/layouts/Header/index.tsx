@@ -123,6 +123,7 @@ export default function Header() {
 // event handler: 마이페이지 버튼 클릭 이벤트 처리 함수
         const onLogoutButtonClickHandler = () => {
             resetLoginUser();
+            setCookies('accessToken', '', { path: MAIN_PATH() });
             navigate(MAIN_PATH());
         };
 
@@ -180,6 +181,11 @@ export default function Header() {
         const isBoardUpdatePage = pathname.startsWith(BOARD_PATH() + '/' + BOARD_UPDATE_PATH(''));
         setBoardUpdatePage(isBoardUpdatePage);
     }, [pathname]);
+
+// effect: login user가 변경될 때마다 실행될 함수
+    useEffect(() => {
+        setLogin(loginUser !== null);
+    }, [loginUser]);
 
 // render: 헤더 레이아웃 렌더링
     return (
