@@ -148,3 +148,11 @@
     line-height: 140%;
     cursor: not-allowed;
 }
+
+.check-fill-icon{
+    background-image: url(assets/image/check-fill.png);
+}
+
+.check-empty-icon{
+    background-image: url(assets/image/check-empty.png);
+}
