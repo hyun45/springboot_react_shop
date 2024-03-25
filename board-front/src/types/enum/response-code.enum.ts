@@ -12,7 +12,7 @@ enum ResponseCode{
     NOT_EXISTED_BOARD = "NB",
 
     // HTTP Status 401
-    SIGN_IN_FAIL = "SF",
+    LOGIN_FAIL = "LF",
     AUTHORIZATION_FAIL = "AF",
 
     // HTTP Status 403
