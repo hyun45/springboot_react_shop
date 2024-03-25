@@ -54,11 +54,11 @@ export default function Authentication() {
             const {code} = responseBody;
             if(code === 'DBE') alert('데이터베이스 오류입니다.');
             if(code === 'LF' || code === 'VF') setError(true);
-            if(code === 'SU') return;
+            if(code !== 'SU') return;
 
             const {token, expirationTime} = responseBody as LoginResponseDto;
             const now = new Date().getTime();
-            const expires = new Date(now + expirationTime * 1000);
+            const expires = new Date(now + (expirationTime * 1000));
             
             setCookie('accessToken', token, {expires, path: MAIN_PATH()});
             navigate(MAIN_PATH());

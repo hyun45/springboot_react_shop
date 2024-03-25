@@ -5,8 +5,6 @@ import { ResponseDto } from './response';
 
 const DOMAIN = 'http://localhost:4000';
 
-// const API_DOMAIN = `${DOMAIN}`;
-
 const LOGIN_URL = () => `${DOMAIN}/auth/login`;
 const SIGN_UP_URL = () => `${DOMAIN}/auth/signUp`;
 
@@ -17,7 +15,7 @@ export const loginRequest = async (requestBody: LoginRequestDto) => {
             return responseBody;
         })
         .catch(error => {
-            if(!error.response) return null;
+            if(!error.response.data) return null;
             const responseBody: ResponseDto = error.response.data;
             return responseBody;
         })
