@@ -2,6 +2,7 @@ package com.hyun.boardback.config;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,12 +21,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.hyun.boardback.filter.JwtAuthenticationFilter;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
-@Configuration
+@Configurable
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
@@ -36,40 +37,34 @@ public class WebSecurityConfig {
     protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception{
 
         httpSecurity
-            .cors(cors -> cors
-                .configurationSource(corsConfigrationSource())
-            )
-            .csrf(CsrfConfigurer::disable)
-            .httpBasic(HttpBasicConfigurer::disable)
-            .sessionManagement(sessionManagement -> sessionManagement
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-            .authorizeHttpRequests(request -> request
-                .requestMatchers("/", "/auth/**", "/search/**", "/file/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/board/**", "/user/*").permitAll()
-                .anyRequest().authenticated()
-            )
-            .exceptionHandling(exceptionHandling -> exceptionHandling
-                .authenticationEntryPoint(new FailedAuthenticationEntryPoint())
-            )
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+            .cors().and()
+            .csrf().disable()
+            .httpBasic().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+            .authorizeRequests()
+            .antMatchers("/", "/auth/**", "/search/**", "/file/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/board/**", "/user/*").permitAll()
+            .anyRequest().authenticated().and()
+            .exceptionHandling().authenticationEntryPoint(new FailedAuthenticationEntryPoint());
+
+        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
 
-    @Bean
-    protected CorsConfigurationSource corsConfigrationSource(){
+    // @Bean
+    // protected CorsConfigurationSource corsConfigrationSource(){
 
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedMethod("*");
-        configuration.addExposedHeader("*");
+    //     CorsConfiguration configuration = new CorsConfiguration();
+    //     configuration.addAllowedOrigin("*");
+    //     configuration.addAllowedMethod("*");
+    //     configuration.addExposedHeader("*");
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    //     source.registerCorsConfiguration("/**", configuration);
 
-        return source;
-    }
+    //     return source;
+    // }
 }
 
 class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -79,8 +74,8 @@ class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
             AuthenticationException authException) throws IOException, ServletException {
 
         response.setContentType("application/json");
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().write("{ \"code\": \"AF\", \"message\": \"Authorization Failed.\"}");
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.getWriter().write("{ \"code\": \"NP\", \"message\": \"Do not have permission.\"}");
     }
     
 }

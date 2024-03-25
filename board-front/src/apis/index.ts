@@ -5,20 +5,19 @@ import { ResponseDto } from './response';
 
 const DOMAIN = 'http://localhost:4000';
 
-const API_DOMAIN = `${DOMAIN}`;
+// const API_DOMAIN = `${DOMAIN}`;
 
-const LOGIN_URL = () => `${API_DOMAIN}/auth/login`;
-const SIGN_UP_URL = () => `${API_DOMAIN}/auth/signUp`;
+const LOGIN_URL = () => `${DOMAIN}/auth/login`;
+const SIGN_UP_URL = () => `${DOMAIN}/auth/signUp`;
 
 export const loginRequest = async (requestBody: LoginRequestDto) => {
     const result = await axios.post(LOGIN_URL(), requestBody)
         .then(response => {
             const responseBody: LoginResponseDto = response.data;
-            console.log(response)
             return responseBody;
         })
         .catch(error => {
-            if(!error.response.data) return null;
+            if(!error.response) return null;
             const responseBody: ResponseDto = error.response.data;
             return responseBody;
         })

@@ -2,9 +2,9 @@ package com.hyun.boardback.entity;
 
 import com.hyun.boardback.dto.request.auth.SignUpRequestDto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
+// import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtProvider {
@@ -25,10 +25,10 @@ public class JwtProvider {
         // 만료기간 1시간
         Date expiredDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
 
-        Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+        // Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
         String jwt = Jwts.builder()
-            .signWith(key, SignatureAlgorithm.HS256)
+            .signWith(SignatureAlgorithm.HS256, secretKey)
             .setSubject(email).setIssuedAt(new Date()).setExpiration(expiredDate)
             .compact();
         
@@ -40,14 +40,11 @@ public class JwtProvider {
 
         Claims claims = null;
 
-        Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+        // Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
         try {
-            claims = Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(jwt)
-                .getBody();
+            claims = Jwts.parser().setSigningKey(secretKey)
+                .parseClaimsJws(jwt).getBody();
         } catch (Exception exception) {
             exception.printStackTrace();;
             return null;

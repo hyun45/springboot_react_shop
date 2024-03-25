@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
+import javax.persistence.Column;
 
 @Getter
 @Setter

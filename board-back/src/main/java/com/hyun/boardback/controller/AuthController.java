@@ -12,7 +12,7 @@ import com.hyun.boardback.dto.response.auth.SignUpResponseDto;
 import com.hyun.boardback.dto.response.auth.LoginResponseDto;
 import com.hyun.boardback.service.AuthService;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
