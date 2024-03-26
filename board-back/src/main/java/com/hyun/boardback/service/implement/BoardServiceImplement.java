@@ -8,12 +8,14 @@ import java.util.List;
 
 import com.hyun.boardback.dto.request.board.PostBoardRequestDto;
 import com.hyun.boardback.dto.response.ResponseDto;
+import com.hyun.boardback.dto.response.board.GetBoardResponseDto;
 import com.hyun.boardback.dto.response.board.PostBoardResponseDto;
 import com.hyun.boardback.entity.BoardEntity;
 import com.hyun.boardback.entity.ImageEntity;
 import com.hyun.boardback.repository.BoardRepository;
 import com.hyun.boardback.repository.ImageRepository;
 import com.hyun.boardback.repository.UserRepository;
+import com.hyun.boardback.repository.resultSet.GetBoardResultSet;
 import com.hyun.boardback.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -56,6 +58,31 @@ public class BoardServiceImplement  implements BoardService{
         }
 
         return PostBoardResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
+        
+        GetBoardResultSet resultSet = null;
+        List<ImageEntity> imageEntities = new ArrayList<>();
+
+        try {
+            resultSet = boardRepository.getBoard(boardNumber);
+            if(resultSet == null) return GetBoardResponseDto.noExistBoard();
+
+            imageEntities = imageRepository.findByBoardNumber(boardNumber);
+
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            boardEntity.increaseViewCount();
+
+            boardRepository.save(boardEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        };
+
+        return GetBoardResponseDto.success(resultSet, imageEntities);
     }
     
     
