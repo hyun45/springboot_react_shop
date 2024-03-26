@@ -11,6 +11,7 @@ import com.hyun.boardback.dto.request.board.PostReplyRequestDto;
 import com.hyun.boardback.dto.response.ResponseDto;
 import com.hyun.boardback.dto.response.board.GetBoardResponseDto;
 import com.hyun.boardback.dto.response.board.GetFavoriteListResponseDto;
+import com.hyun.boardback.dto.response.board.GetReplyListResponseDto;
 import com.hyun.boardback.dto.response.board.PostBoardResponseDto;
 import com.hyun.boardback.dto.response.board.PostReplyResponseDto;
 import com.hyun.boardback.dto.response.board.PutFavoriteResponseDto;
@@ -25,6 +26,7 @@ import com.hyun.boardback.repository.ReplyRepository;
 import com.hyun.boardback.repository.UserRepository;
 import com.hyun.boardback.repository.resultSet.GetBoardResultSet;
 import com.hyun.boardback.repository.resultSet.GetFavoriteListResultSet;
+import com.hyun.boardback.repository.resultSet.GetReplyListResultSet;
 import com.hyun.boardback.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -169,6 +171,24 @@ public class BoardServiceImplement  implements BoardService{
         };
 
         return PostReplyResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super GetReplyListResponseDto> getReplyList(Integer boardNumber) {
+        
+        List<GetReplyListResultSet> resultSets = new ArrayList<>();
+
+        try {
+            boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
+            if(!existedBoard) return GetReplyListResponseDto.noExistBoard();
+
+            resultSets = replyRepository.getReplyList(boardNumber);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        };
+
+        return GetReplyListResponseDto.success(resultSets);
     }
     
     

@@ -20,6 +20,7 @@ import com.hyun.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.hyun.boardback.dto.response.board.PostBoardResponseDto;
 import com.hyun.boardback.dto.response.board.PutFavoriteResponseDto;
 import com.hyun.boardback.dto.response.board.PostReplyResponseDto;
+import com.hyun.boardback.dto.response.board.GetReplyListResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -66,5 +67,12 @@ public class BoardController {
         
             ResponseEntity<? super PostReplyResponseDto> response = boardService.postReply(requestBody, boardNumber, email);
             return response;
+    }
+
+    @GetMapping("/{boardNumber}/reply-list")
+    public ResponseEntity<? super GetReplyListResponseDto> getReplyList(@PathVariable("boardNumber") Integer boardNumber){
+
+        ResponseEntity<? super GetReplyListResponseDto> response = boardService.getReplyList(boardNumber);
+        return response;
     }
 }
