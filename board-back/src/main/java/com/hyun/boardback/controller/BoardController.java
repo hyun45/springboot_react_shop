@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hyun.boardback.service.BoardService;
 import com.hyun.boardback.dto.request.board.PostBoardRequestDto;
+import com.hyun.boardback.dto.request.board.PostReplyRequestDto;
 import com.hyun.boardback.dto.response.board.GetBoardResponseDto;
 import com.hyun.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.hyun.boardback.dto.response.board.PostBoardResponseDto;
 import com.hyun.boardback.dto.response.board.PutFavoriteResponseDto;
+import com.hyun.boardback.dto.response.board.PostReplyResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -55,5 +57,14 @@ public class BoardController {
         
         ResponseEntity<? super GetFavoriteListResponseDto> response = boardService.getFavoriteList(boardNumber);
         return response;
+    }
+
+    @PostMapping("/{boardNumber}/reply")
+    public ResponseEntity<? super PostReplyResponseDto> postReply(
+        @RequestBody @Valid PostReplyRequestDto requestBody, @PathVariable("boardNumber") Integer boardNumber, @AuthenticationPrincipal String email
+        ){
+        
+            ResponseEntity<? super PostReplyResponseDto> response = boardService.postReply(requestBody, boardNumber, email);
+            return response;
     }
 }

@@ -7,17 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hyun.boardback.dto.request.board.PostBoardRequestDto;
+import com.hyun.boardback.dto.request.board.PostReplyRequestDto;
 import com.hyun.boardback.dto.response.ResponseDto;
 import com.hyun.boardback.dto.response.board.GetBoardResponseDto;
 import com.hyun.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.hyun.boardback.dto.response.board.PostBoardResponseDto;
+import com.hyun.boardback.dto.response.board.PostReplyResponseDto;
 import com.hyun.boardback.dto.response.board.PutFavoriteResponseDto;
 import com.hyun.boardback.entity.BoardEntity;
 import com.hyun.boardback.entity.FavoriteEntity;
 import com.hyun.boardback.entity.ImageEntity;
+import com.hyun.boardback.entity.ReplyEntity;
 import com.hyun.boardback.repository.BoardRepository;
 import com.hyun.boardback.repository.FavoriteRepository;
 import com.hyun.boardback.repository.ImageRepository;
+import com.hyun.boardback.repository.ReplyRepository;
 import com.hyun.boardback.repository.UserRepository;
 import com.hyun.boardback.repository.resultSet.GetBoardResultSet;
 import com.hyun.boardback.repository.resultSet.GetFavoriteListResultSet;
@@ -36,6 +40,8 @@ public class BoardServiceImplement  implements BoardService{
     private final ImageRepository imageRepository;
 
     private final FavoriteRepository favoriteRepository;
+
+    private final ReplyRepository replyRepository;
     
     @Override
     public ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email) {
@@ -139,6 +145,30 @@ public class BoardServiceImplement  implements BoardService{
         }
 
         return GetFavoriteListResponseDto.success(resultSets);
+    }
+
+    @Override
+    public ResponseEntity<? super PostReplyResponseDto> postReply(PostReplyRequestDto dto, Integer boardNumber, String email) {
+
+        try {
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            if(boardEntity == null) return PostReplyResponseDto.noExistBoard();
+
+            boolean existedUser = userRepository.existsByEmail(email);
+            if(!existedUser) return PostReplyResponseDto.noExistUser();
+
+            ReplyEntity replyEntity = new ReplyEntity(dto, boardNumber, email);
+            replyRepository.save(replyEntity);
+
+            boardEntity.increaseReplyCount();
+            boardRepository.save(boardEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        };
+
+        return PostReplyResponseDto.success();
     }
     
     
