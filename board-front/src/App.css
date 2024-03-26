@@ -1,3 +1,8 @@
+.divider{
+    width: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
 .icon-box{
     width: 24px;
     height: 24px;
@@ -155,4 +160,20 @@
 
 .check-empty-icon{
     background-image: url(assets/image/check-empty.png);
+}
+
+.image-icon{
+    background-image: url(assets/image/image-icon.png);
+}
+
+.video-icon{
+    background-image: url(assets/image/video-icon.png);
+}
+
+.folder-icon{
+    background-image: url(assets/image/folder-icon.png);
+}
+
+.close-icon{
+    background-image: url(assets/image/close-icon.png);
 }
