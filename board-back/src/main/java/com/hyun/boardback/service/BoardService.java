@@ -5,9 +5,11 @@ import org.springframework.http.ResponseEntity;
 import com.hyun.boardback.dto.request.board.PostBoardRequestDto;
 import com.hyun.boardback.dto.response.board.GetBoardResponseDto;
 import com.hyun.boardback.dto.response.board.PostBoardResponseDto;
+import com.hyun.boardback.dto.response.board.PutFavoriteResponseDto;
 
 public interface BoardService {
     
     ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email);
     ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber);
+    ResponseEntity<? super PutFavoriteResponseDto> putFavorite(Integer boardNumber, String email);
 }
