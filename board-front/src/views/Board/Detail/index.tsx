@@ -2,7 +2,6 @@ import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import './style.css';
 import FavoriteItem from 'components/FavoriteItem';
 import { Board, FavoriteListItem, ReplyListItem } from 'types/interface';
-import { favoriteListMock, replyListMock } from 'mocks';
 import ReplyItem from 'components/ReplyItem';
 import Pagination from 'components/Pagination';
 import defaultProfileImage from 'assets/image/default-profile-picture-grey-male-icon.png';
