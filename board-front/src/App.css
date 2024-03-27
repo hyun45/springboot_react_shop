@@ -11,6 +11,14 @@
     justify-content: center;
 }
 
+.icon-box-small{
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .icon-button{
     border-radius: 50% 50%;
     width: 24px;
@@ -42,6 +50,18 @@
 
 .expand-right-icon{
     background-image: url(assets/image/right-icon.png);
+}
+
+.expand-left-icon{
+    background-image: url(assets/image/left-icon.png);
+}
+
+.right-icon{
+    background-image: url(assets/image/next-icon.png);
+}
+
+.left-icon{
+    background-image: url(assets/image/back-icon.png);
 }
 
 .logo-white-icon{
