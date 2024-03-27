@@ -8,11 +8,12 @@ import defaultProfileImage from 'assets/image/default-profile-picture-grey-male-
 import { useLoginUserStore } from 'stores';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BOARD_PATH, BOARD_UPDATE_PATH, MAIN_PATH, USER_PATH } from 'constant';
-import { GetReplyListRequest, getBoardRequest, getFavoriteListRequest, increaseViewCountRequest } from 'apis';
+import { GetReplyListRequest, getBoardRequest, getFavoriteListRequest, increaseViewCountRequest, putFavoriteRequest } from 'apis';
 import GetBoardResponseDto from 'apis/response/board/get-board.response.dto';
 import { ResponseDto } from 'apis/response';
-import { GetFavoriteListResponseDto, GetReplyListResponseDto, IncreaseViewCountResponseDto } from 'apis/response/board';
+import { GetFavoriteListResponseDto, GetReplyListResponseDto, IncreaseViewCountResponseDto, PutFavoriteResponseDto } from 'apis/response/board';
 import dayjs from 'dayjs';
+import { useCookies } from 'react-cookie';
 
 // component: 게시글 상세 화면 컴포넌트
 export default function BoardDetail() {
@@ -22,6 +23,9 @@ export default function BoardDetail() {
 
 // state: 게시글 번호 path variable 상태
     const {boardNumber} = useParams();
+
+// state: 쿠키 상태
+    const [cookies, setCookies] = useCookies();
 
 // function: navigate 함수
     const navigate = useNavigate();
@@ -174,7 +178,8 @@ export default function BoardDetail() {
 
 // event handler: 좋아요 클릭 이벤트 처리
         const onFavoriteClickHandler = () => {
-            setFavorite(!isFavorite);
+            if(!boardNumber || !loginUser || !cookies.accessToken) return;
+            putFavoriteRequest(boardNumber, cookies.accessToken).then(putFavoriteResponse);
         };
 
 // event handler: 좋아요 목록 클릭 이벤트 처리
@@ -232,7 +237,22 @@ export default function BoardDetail() {
 
             const {replyList} = responseBody as GetReplyListResponseDto;
             setReplyList(replyList);
-        }
+        };
+
+// function: put favorite response 처리 함수
+        const putFavoriteResponse = (responseBody: PutFavoriteResponseDto |  ResponseDto | null) => {
+            if(!responseBody) return;
+            const {code} = responseBody;
+            if(code === 'VF') alert('잘못된 접근입니다.');
+            if(code === 'NU') alert('존재하지 않는 유저입니다.');
+            if(code === 'NB') alert('존재하지 않는 게시글입니다.');
+            if(code === 'AF') alert('인증에 실패했습니다.');
+            if(code === 'DBE') alert('데이터베이스 오류입니다.');
+            if(code !== 'SU') return;
+
+            if(!boardNumber) return;
+            getFavoriteListRequest(boardNumber).then(getFavoriteListResponse);
+        };
 
 // effect: 게시글 번호 path variable이 바뀔 때마다 좋아요 및 댓글 리스트 불러오기
         useEffect(() => {
