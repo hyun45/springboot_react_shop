@@ -255,14 +255,16 @@ export default function BoardDetail() {
                         <div className='board-detail-bottom-reply-pagination-box'>
                             <Pagination />
                         </div>
-                        <div className='board-detail-bottom-reply-input-box'>
-                            <div className='board-detail-bottom-reply-input-container'>
-                                <textarea ref={replyRef} className='board-detail-bottom-reply-texarea' placeholder='댓글을 작성해주세요.' value={reply} onChange={onReplyChangeHandler}/>
-                                <div className='board-detail-bottom-reply-button-box'>
-                                    <div className={reply === '' ? 'disable-button' : 'able-button'} onClick={onReplySubmitButtonClickHandler}>{'작성'}</div>
+                        {loginUser !== null &&
+                            <div className='board-detail-bottom-reply-input-box'>
+                                <div className='board-detail-bottom-reply-input-container'>
+                                    <textarea ref={replyRef} className='board-detail-bottom-reply-texarea' placeholder='댓글을 작성해주세요.' value={reply} onChange={onReplyChangeHandler}/>
+                                    <div className='board-detail-bottom-reply-button-box'>
+                                        <div className={reply === '' ? 'disable-button' : 'able-button'} onClick={onReplySubmitButtonClickHandler}>{'작성'}</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     </div>
                 }
             </div>
