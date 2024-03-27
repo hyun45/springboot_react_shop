@@ -16,7 +16,7 @@ export default function ReplyItem({replyListItem}: Props) {
 
 // function: 작성일 경과 시간 함수
     const getElapsedTime = () => {
-        const now = dayjs().add(9, 'hour'); // 한국 시간에 맞게
+        const now = dayjs(); // MySQL에서 시간을 서울로 설정하지 않았다면 .add(9, 'hour')을 사용하여 한국 시간에 맞게 조절
         const writeTime = dayjs(writeDatetime);
 
         const gap = now.diff(writeTime, 's');   // 초 단위

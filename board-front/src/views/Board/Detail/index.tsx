@@ -8,12 +8,13 @@ import defaultProfileImage from 'assets/image/default-profile-picture-grey-male-
 import { useLoginUserStore } from 'stores';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BOARD_PATH, BOARD_UPDATE_PATH, MAIN_PATH, USER_PATH } from 'constant';
-import { GetReplyListRequest, getBoardRequest, getFavoriteListRequest, increaseViewCountRequest, putFavoriteRequest } from 'apis';
+import { GetReplyListRequest, getBoardRequest, getFavoriteListRequest, increaseViewCountRequest, postReplyRequest, putFavoriteRequest } from 'apis';
 import GetBoardResponseDto from 'apis/response/board/get-board.response.dto';
 import { ResponseDto } from 'apis/response';
-import { GetFavoriteListResponseDto, GetReplyListResponseDto, IncreaseViewCountResponseDto, PutFavoriteResponseDto } from 'apis/response/board';
+import { GetFavoriteListResponseDto, GetReplyListResponseDto, IncreaseViewCountResponseDto, PostReplyResponseDto, PutFavoriteResponseDto } from 'apis/response/board';
 import dayjs from 'dayjs';
 import { useCookies } from 'react-cookie';
+import { PostReplyRequestDto } from 'apis/request/board';
 
 // component: 게시글 상세 화면 컴포넌트
 export default function BoardDetail() {
@@ -203,7 +204,12 @@ export default function BoardDetail() {
 
 // event handler: 댓글 작성 버튼 클릭 이벤트 처리
         const onReplySubmitButtonClickHandler = () => {
-            if(!reply) return;      // 작성하지 않으면 button이 disable이어도 클릭 가능
+            if(!boardNumber || !reply || !loginUser || !cookies.accessToken) return;      // 작성하지 않으면 button이 disable이어도 클릭 가능
+            const requestBody: PostReplyRequestDto = {
+                content: reply
+            };
+
+            postReplyRequest(boardNumber, requestBody, cookies.accessToken).then(postReplyResponse);
         };
 
 // function: get favorite list respones 처리 함수
@@ -253,6 +259,22 @@ export default function BoardDetail() {
             if(!boardNumber) return;
             getFavoriteListRequest(boardNumber).then(getFavoriteListResponse);
         };
+
+// function: post reply response 처리 함수
+        const postReplyResponse = (responseBody: PostReplyResponseDto | ResponseDto | null) => {
+            if(!responseBody) return;
+            const {code} = responseBody;
+            if(code === 'VF') alert('잘못된 접근입니다.');
+            if(code === 'NU') alert('존재하지 않는 유저입니다.');
+            if(code === 'NB') alert('존재하지 않는 게시글입니다.');
+            if(code === 'AF') alert('인증에 실패했습니다.');
+            if(code === 'DBE') alert('데이터베이스 오류입니다.');
+            if(code !== 'SU') return;
+
+            setReply('');   // 작성 시 댓글 작성 칸 비움
+            if(!boardNumber) return;
+            GetReplyListRequest(boardNumber).then(getReplyListResponse);
+        }
 
 // effect: 게시글 번호 path variable이 바뀔 때마다 좋아요 및 댓글 리스트 불러오기
         useEffect(() => {
@@ -320,7 +342,7 @@ export default function BoardDetail() {
                                 <div className='board-detail-bottom-reply-input-container'>
                                     <textarea ref={replyRef} className='board-detail-bottom-reply-texarea' placeholder='댓글을 작성해주세요.' value={reply} onChange={onReplyChangeHandler}/>
                                     <div className='board-detail-bottom-reply-button-box'>
-                                        <div className={reply === '' ? 'disable-button' : 'able-button'} onClick={onReplySubmitButtonClickHandler}>{'작성'}</div>
+                                        <div className={reply === '' ? 'disable-button' : 'able-button'} onClick={onReplySubmitButtonClickHandler}>{'댓글 작성'}</div>
                                     </div>
                                 </div>
                             </div>

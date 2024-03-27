@@ -3,8 +3,8 @@ import { LoginRequestDto, SignUpRequestDto } from './request/auth';
 import { LoginResponseDto, SignUpResponseDto } from './response/auth';
 import { ResponseDto } from './response';
 import { GetLoginUserResponseDto } from './response/user';
-import { PostBoardRequestDto } from './request/board';
-import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, GetReplyListResponseDto, PutFavoriteResponseDto } from './response/board';
+import { PostBoardRequestDto, PostReplyRequestDto } from './request/board';
+import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, GetReplyListResponseDto, PutFavoriteResponseDto, PostReplyResponseDto } from './response/board';
 
 const DOMAIN = 'http://localhost:4000';
 
@@ -170,6 +170,23 @@ export const putFavoriteRequest = async (boardNumber: number | string, accessTok
     const result = await axios.put(PUT_FAVORITE_URL(boardNumber), {}, authorization(accessToken))
         .then(response => {
             const responseBody: PutFavoriteResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            if(!error.response) return null;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+
+    return result;
+}
+
+const POST_REPLY_URL = (boardNumber: number | string) => `${DOMAIN}/board/${boardNumber}/reply`;
+
+export const postReplyRequest = async (boardNumber: number | string, requestBody: PostReplyRequestDto, accessToken: string) => {
+    const result = await axios.post(POST_REPLY_URL(boardNumber), requestBody, authorization(accessToken))
+        .then(response => {
+            const responseBody: PostReplyResponseDto = response.data;
             return responseBody;
         })
         .catch(error => {
