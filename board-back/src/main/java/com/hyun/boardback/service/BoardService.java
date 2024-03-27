@@ -10,6 +10,7 @@ import com.hyun.boardback.dto.response.board.PutFavoriteResponseDto;
 import com.hyun.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.hyun.boardback.dto.response.board.PostReplyResponseDto;
 import com.hyun.boardback.dto.response.board.GetReplyListResponseDto;
+import com.hyun.boardback.dto.response.board.IncreaseViewCountResponseDto;
 
 public interface BoardService {
     
@@ -19,4 +20,5 @@ public interface BoardService {
     ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(Integer boardNumber);
     ResponseEntity<? super PostReplyResponseDto> postReply(PostReplyRequestDto dto, Integer boardNumber, String email);
     ResponseEntity<? super GetReplyListResponseDto> getReplyList(Integer boardNumber);
+    ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewCount(Integer boardNumber);
 }

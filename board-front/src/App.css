@@ -41,7 +41,7 @@
 }
 
 .expand-right-icon{
-    background-image: url(assets/image/expand-right.png);
+    background-image: url(assets/image/right-icon.png);
 }
 
 .logo-white-icon{
@@ -154,6 +154,21 @@
     cursor: not-allowed;
 }
 
+.able-button{
+    border-radius: 40px;
+    width: 100px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 140%;
+    cursor: pointer;
+}
+
 .check-fill-icon{
     background-image: url(assets/image/check-fill.png);
 }
@@ -176,4 +191,32 @@
 
 .close-icon{
     background-image: url(assets/image/close-icon.png);
+}
+
+.more-icon{
+    background-image: url(assets/image/more-icon.png);
+}
+
+.favorite-fill-icon{
+    background-image: url(assets/image/heart-fill.png);
+}
+
+.favorite-unfill-icon{
+    background-image: url(assets/image/heart-unfill.png);
+}
+
+.up-icon{
+    background-image: url(assets/image/up-icon.png);
+}
+
+.down-icon{
+    background-image: url(assets/image/down-icon.png);
+}
+
+.reply-icon{
+    background-image: url(assets/image/reply-icon.png);
+}
+
+.emphasis{
+    font-weight: bolder;
 }
