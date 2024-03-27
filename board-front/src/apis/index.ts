@@ -4,7 +4,7 @@ import { LoginResponseDto, SignUpResponseDto } from './response/auth';
 import { ResponseDto } from './response';
 import { GetLoginUserResponseDto } from './response/user';
 import { PostBoardRequestDto } from './request/board';
-import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto } from './response/board';
+import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto } from './response/board';
 
 const DOMAIN = 'http://localhost:4000';
 
@@ -126,6 +126,23 @@ export const increaseViewCountRequest = async (boardNumber: number | string) => 
             const responseBody: ResponseDto = error.response.data;
             return responseBody;
         })
+
+    return result;
+}
+
+const GET_FAVORITE_LIST_URL = (boardNumber: number | string) => `${DOMAIN}/board/${boardNumber}/favorite-list`;
+
+export const getFavoriteListRequest = async (boardNumber: number | string) => {
+    const result = await axios.get(GET_FAVORITE_LIST_URL(boardNumber))
+        .then(response => {
+            const responseBody: GetFavoriteListResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            if(!error.response) return null;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
 
     return result;
 }

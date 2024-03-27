@@ -9,10 +9,10 @@ import defaultProfileImage from 'assets/image/default-profile-picture-grey-male-
 import { useLoginUserStore } from 'stores';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BOARD_PATH, BOARD_UPDATE_PATH, MAIN_PATH, USER_PATH } from 'constant';
-import { getBoardRequest, increaseViewCountRequest } from 'apis';
+import { getBoardRequest, getFavoriteListRequest, increaseViewCountRequest } from 'apis';
 import GetBoardResponseDto from 'apis/response/board/get-board.response.dto';
 import { ResponseDto } from 'apis/response';
-import { IncreaseViewCountResponseDto } from 'apis/response/board';
+import { GetFavoriteListResponseDto, IncreaseViewCountResponseDto } from 'apis/response/board';
 import dayjs from 'dayjs';
 
 // component: 게시글 상세 화면 컴포넌트
@@ -109,7 +109,7 @@ export default function BoardDetail() {
                 return;
             };
             getBoardRequest(boardNumber).then(getBoardResponse);
-        }, [boardNumber])
+        }, [boardNumber]);
 
 // render: 게시글 상세 화면 상단 컴포넌트 렌더링
         if(!board) return <></>
@@ -202,9 +202,31 @@ export default function BoardDetail() {
             if(!reply) return;      // 작성하지 않으면 button이 disable이어도 클릭 가능
         };
 
+// function: get favorite list respones 처리 함수
+        const getFavoriteListResponse = (responseBody: GetFavoriteListResponseDto | ResponseDto | null) => {
+            if(!responseBody) return;
+            const {code} = responseBody;
+            if(code === 'NB') alert('존재하지 않는 게시글입니다.');
+            if(code === 'DBE') alert('데이터베이스 오류입니다.');
+            if(code !== 'SU') return;
+
+            const {favoriteList} = responseBody as GetFavoriteListResponseDto;
+            setFavoriteList(favoriteList);
+
+            if(!loginUser){
+                setFavorite(false);
+                return;
+            };
+
+            const isFavorite = favoriteList.findIndex(favorite => favorite.email === loginUser.email) !== -1;
+            setFavorite(isFavorite);
+                
+        };
+
 // effect: 게시글 번호 path variable이 바뀔 때마다 좋아요 및 댓글 리스트 불러오기
         useEffect(() => {
-            setFavoriteList(favoriteListMock);
+            if(!boardNumber) return;
+            getFavoriteListRequest(boardNumber).then(getFavoriteListResponse);
             setReplyList(replyListMock);
         },[boardNumber]);
 
