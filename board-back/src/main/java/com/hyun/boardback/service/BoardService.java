@@ -11,6 +11,7 @@ import com.hyun.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.hyun.boardback.dto.response.board.PostReplyResponseDto;
 import com.hyun.boardback.dto.response.board.GetReplyListResponseDto;
 import com.hyun.boardback.dto.response.board.IncreaseViewCountResponseDto;
+import com.hyun.boardback.dto.response.board.DeleteBoardResponseDto;
 
 public interface BoardService {
     
@@ -21,4 +22,5 @@ public interface BoardService {
     ResponseEntity<? super PostReplyResponseDto> postReply(PostReplyRequestDto dto, Integer boardNumber, String email);
     ResponseEntity<? super GetReplyListResponseDto> getReplyList(Integer boardNumber);
     ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewCount(Integer boardNumber);
+    ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(Integer boardNumber, String email);
 }

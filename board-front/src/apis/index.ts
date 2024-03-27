@@ -4,7 +4,7 @@ import { LoginResponseDto, SignUpResponseDto } from './response/auth';
 import { ResponseDto } from './response';
 import { GetLoginUserResponseDto } from './response/user';
 import { PostBoardRequestDto, PostReplyRequestDto } from './request/board';
-import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, GetReplyListResponseDto, PutFavoriteResponseDto, PostReplyResponseDto } from './response/board';
+import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, GetReplyListResponseDto, PutFavoriteResponseDto, PostReplyResponseDto, DeleteBoardResponseDto } from './response/board';
 
 const DOMAIN = 'http://localhost:4000';
 
@@ -187,6 +187,23 @@ export const postReplyRequest = async (boardNumber: number | string, requestBody
     const result = await axios.post(POST_REPLY_URL(boardNumber), requestBody, authorization(accessToken))
         .then(response => {
             const responseBody: PostReplyResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            if(!error.response) return null;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+
+    return result;
+}
+
+const DELETE_BOARD_URL = (boardNumber: number | string) => `${DOMAIN}/board/${boardNumber}`;
+
+export const deleteBoardRequest = async (boardNumber: number | string, accessToken: string) => {
+    const result = await axios.delete(DELETE_BOARD_URL(boardNumber), authorization(accessToken))
+        .then(response => {
+            const responseBody: DeleteBoardResponseDto = response.data;
             return responseBody;
         })
         .catch(error => {

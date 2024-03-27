@@ -2,6 +2,8 @@ package com.hyun.boardback.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -27,4 +29,7 @@ public interface ReplyRepository extends JpaRepository<ReplyEntity, Integer>{
         nativeQuery = true
     )
     List<GetReplyListResultSet> getReplyList(Integer boardNumber);
+
+    @Transactional
+    void deleteByBoardNumber(Integer boardNumber);
 }

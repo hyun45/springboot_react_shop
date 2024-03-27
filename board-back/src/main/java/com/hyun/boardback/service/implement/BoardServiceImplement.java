@@ -9,6 +9,7 @@ import java.util.List;
 import com.hyun.boardback.dto.request.board.PostBoardRequestDto;
 import com.hyun.boardback.dto.request.board.PostReplyRequestDto;
 import com.hyun.boardback.dto.response.ResponseDto;
+import com.hyun.boardback.dto.response.board.DeleteBoardResponseDto;
 import com.hyun.boardback.dto.response.board.GetBoardResponseDto;
 import com.hyun.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.hyun.boardback.dto.response.board.GetReplyListResponseDto;
@@ -202,6 +203,34 @@ public class BoardServiceImplement  implements BoardService{
 
         return IncreaseViewCountResponseDto.success();
     }
+
+    @Override
+    public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(Integer boardNumber, String email) {
+        
+        try {
+            boolean existedUser = userRepository.existsByEmail(email);
+            if(!existedUser) return DeleteBoardResponseDto.noExistUser();
+
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            if(boardEntity == null) return DeleteBoardResponseDto.noExistBoard();
+
+            String writerEmail = boardEntity.getWriterEmail();
+            boolean isWriter = writerEmail.equals(email);
+            if(!isWriter) return DeleteBoardResponseDto.noPermission();
+
+            imageRepository.deleteByBoardNumber(boardNumber);
+            replyRepository.deleteByBoardNumber(boardNumber);
+            favoriteRepository.deleteByBoardNumber(boardNumber);
+            
+            boardRepository.delete(boardEntity);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return DeleteBoardResponseDto.success();
+    }
+    
     
     
 }
