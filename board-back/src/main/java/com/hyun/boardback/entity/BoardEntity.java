@@ -76,6 +76,6 @@ public class BoardEntity {
 
     public void patchBoard(PatchBoardRequestDto dto){
         this.title = dto.getTitle();
-        this.content = dto.getTitle();
+        this.content = dto.getContent();
     }
 }
