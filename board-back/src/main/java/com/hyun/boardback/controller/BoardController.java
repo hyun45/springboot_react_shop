@@ -28,6 +28,7 @@ import com.hyun.boardback.dto.response.board.GetReplyListResponseDto;
 import com.hyun.boardback.dto.response.board.IncreaseViewCountResponseDto;
 import com.hyun.boardback.dto.response.board.DeleteBoardResponseDto;
 import com.hyun.boardback.dto.response.board.PatchBoardResponseDto;
+import com.hyun.boardback.dto.response.board.GetTop3BoardListResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -108,6 +109,13 @@ public class BoardController {
     public ResponseEntity<? super GetLatestBoardListResponseDto> getLatestBoardList(){
 
         ResponseEntity<? super GetLatestBoardListResponseDto> response = boardService.getLatestBoardList();
+        return response;
+    }
+
+    @GetMapping("/top-3")
+    public ResponseEntity<? super GetTop3BoardListResponseDto> getTop3BoardList(){
+
+        ResponseEntity<? super GetTop3BoardListResponseDto> response = boardService.getTop3BoardList();
         return response;
     }
 }
