@@ -6,6 +6,7 @@ import GetReplyListResponseDto from './get-reply-list.response.dto';
 import PutFavoriteResponseDto from './put-favorite.response.dto';
 import PostReplyResponseDto from './post-reply.response.dto';
 import DeleteBoardResponseDto from './delete-board.response.dto';
+import PatchBoardResponseDto from './patch-board.response.dto';
 
 export type{
     PostBoardResponseDto,
@@ -15,5 +16,6 @@ export type{
     GetReplyListResponseDto,
     PutFavoriteResponseDto,
     PostReplyResponseDto,
-    DeleteBoardResponseDto
+    DeleteBoardResponseDto,
+    PatchBoardResponseDto
 }

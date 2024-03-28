@@ -3,8 +3,8 @@ import { LoginRequestDto, SignUpRequestDto } from './request/auth';
 import { LoginResponseDto, SignUpResponseDto } from './response/auth';
 import { ResponseDto } from './response';
 import { GetLoginUserResponseDto } from './response/user';
-import { PostBoardRequestDto, PostReplyRequestDto } from './request/board';
-import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, GetReplyListResponseDto, PutFavoriteResponseDto, PostReplyResponseDto, DeleteBoardResponseDto } from './response/board';
+import { PatchBoardRequestDto, PostBoardRequestDto, PostReplyRequestDto } from './request/board';
+import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, GetReplyListResponseDto, PutFavoriteResponseDto, PostReplyResponseDto, DeleteBoardResponseDto, PatchBoardResponseDto } from './response/board';
 
 const DOMAIN = 'http://localhost:4000';
 
@@ -204,6 +204,23 @@ export const deleteBoardRequest = async (boardNumber: number | string, accessTok
     const result = await axios.delete(DELETE_BOARD_URL(boardNumber), authorization(accessToken))
         .then(response => {
             const responseBody: DeleteBoardResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            if(!error.response) return null;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+
+    return result;
+}
+
+const PATCH_BOARD_URL = (boardNumber: number | string) => `${DOMAIN}/board/${boardNumber}`;
+
+export const patchBoardRequest = async (boardNumber: number | string, requestBody: PatchBoardRequestDto, accessToken: string) => {
+    const result = await axios.patch(PATCH_BOARD_URL(boardNumber), requestBody, authorization(accessToken))
+        .then(response => {
+            const responseBody: PatchBoardResponseDto = response.data;
             return responseBody;
         })
         .catch(error => {
