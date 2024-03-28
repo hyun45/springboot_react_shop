@@ -4,7 +4,8 @@ import { LoginResponseDto, SignUpResponseDto } from './response/auth';
 import { ResponseDto } from './response';
 import { GetLoginUserResponseDto } from './response/user';
 import { PatchBoardRequestDto, PostBoardRequestDto, PostReplyRequestDto } from './request/board';
-import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, GetReplyListResponseDto, PutFavoriteResponseDto, PostReplyResponseDto, DeleteBoardResponseDto, PatchBoardResponseDto } from './response/board';
+import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, GetReplyListResponseDto, PutFavoriteResponseDto, PostReplyResponseDto, DeleteBoardResponseDto, PatchBoardResponseDto, GetLatestBoardListResponseDto, GetTop3BoardListResponseDto } from './response/board';
+import { GetPopularListResponseDto } from './response/search';
 
 const DOMAIN = 'http://localhost:4000';
 
@@ -27,7 +28,7 @@ export const loginRequest = async (requestBody: LoginRequestDto) => {
             return responseBody;
         });
     return result;
-}
+};
 
 export const signUpRequest = async (requestBody: SignUpRequestDto) => {
     const result = await axios.post(SIGN_UP_URL(), requestBody)
@@ -41,7 +42,7 @@ export const signUpRequest = async (requestBody: SignUpRequestDto) => {
             return responseBody;
         });
     return result;
-}
+};
 
 const POST_BOARD_URL = () => `${DOMAIN}/board`;
 
@@ -58,7 +59,7 @@ export const postBoardRequest = async (requestBody: PostBoardRequestDto, accessT
         })
 
     return result;
-}
+};
 
 const Get_Login_USER_URL = () => `${DOMAIN}/user`;
 
@@ -76,7 +77,7 @@ export const getLoginUserRequest = async (accessToken: string) => {
         });
 
     return result;
-}
+};
 
 const File_DOMAIN = `${DOMAIN}/file`;
 
@@ -95,7 +96,7 @@ export const fileUploadRequest = async (data: FormData) => {
         });
 
     return result;
-}
+};
 
 const GET_BOARD_URL = (boardNumber: number | string) => `${DOMAIN}/board/${boardNumber}`;
 const INCREASE_VIEW_COUNT_URL = (boardNumber: number | string) => `${DOMAIN}/board/${boardNumber}/increase-view-count`
@@ -113,7 +114,7 @@ export const getBoardRequest = async (boardNumber: number | string) => {
         });
 
     return result;
-}
+};
 
 export const increaseViewCountRequest = async (boardNumber: number | string) => {
     const result = await axios.get(INCREASE_VIEW_COUNT_URL(boardNumber))
@@ -128,7 +129,7 @@ export const increaseViewCountRequest = async (boardNumber: number | string) => 
         })
 
     return result;
-}
+};
 
 const GET_FAVORITE_LIST_URL = (boardNumber: number | string) => `${DOMAIN}/board/${boardNumber}/favorite-list`;
 
@@ -145,7 +146,7 @@ export const getFavoriteListRequest = async (boardNumber: number | string) => {
         });
 
     return result;
-}
+};
 
 const GET_REPLY_LIST_URL = (boardNumber: number | string) => `${DOMAIN}/board/${boardNumber}/reply-list`;
 
@@ -162,7 +163,7 @@ export const GetReplyListRequest = async (boardNumber: number | string) => {
         });
 
     return result;
-}
+};
 
 const PUT_FAVORITE_URL = (boardNumber: number | string) => `${DOMAIN}/board/${boardNumber}/favorite`;
 
@@ -179,7 +180,7 @@ export const putFavoriteRequest = async (boardNumber: number | string, accessTok
         });
 
     return result;
-}
+};
 
 const POST_REPLY_URL = (boardNumber: number | string) => `${DOMAIN}/board/${boardNumber}/reply`;
 
@@ -196,7 +197,7 @@ export const postReplyRequest = async (boardNumber: number | string, requestBody
         });
 
     return result;
-}
+};
 
 const DELETE_BOARD_URL = (boardNumber: number | string) => `${DOMAIN}/board/${boardNumber}`;
 
@@ -213,7 +214,7 @@ export const deleteBoardRequest = async (boardNumber: number | string, accessTok
         });
 
     return result;
-}
+};
 
 const PATCH_BOARD_URL = (boardNumber: number | string) => `${DOMAIN}/board/${boardNumber}`;
 
@@ -230,4 +231,55 @@ export const patchBoardRequest = async (boardNumber: number | string, requestBod
         });
 
     return result;
-}
+};
+
+const GET_LATEST_BOARD_LIST_URL = () => `${DOMAIN}/board/latest-list`;
+
+export const getLatestBoardListRequest = async () => {
+    const result = await axios.get(GET_LATEST_BOARD_LIST_URL())
+        .then(response => {
+            const responseBody: GetLatestBoardListResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            if(!error.response) return null;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+
+    return result;
+};
+
+const GET_TOP_3_BOARD_LIST_URL = () => `${DOMAIN}/board/top-3`;
+
+export const getTop3BoardListRequest = async () => {
+    const result = await axios.get(GET_TOP_3_BOARD_LIST_URL())
+        .then(response => {
+            const responseBody: GetTop3BoardListResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            if(!error.response) return null;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+
+    return result;
+};
+
+const GET_POPOULAR_LIST_URL = () => `${DOMAIN}/search/popular-list`;
+
+export const getPopularListRequest = async () => {
+    const result = await axios.get(GET_POPOULAR_LIST_URL())
+        .then(response => {
+            const responseBody: GetPopularListResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            if(!error.response) return null;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+
+    return result;
+};

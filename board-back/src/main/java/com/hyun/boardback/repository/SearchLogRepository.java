@@ -19,7 +19,7 @@ public interface SearchLogRepository extends JpaRepository<SearchLogEntity, Inte
         "WHERE relation IS FALSE " + 
         "GROUP BY search_word " +
         "ORDER BY count DESC " + 
-        "LIMIT 5",
+        "LIMIT 10",
         nativeQuery = true
     )
     List<GetPopularListResultSet> getPopularList();

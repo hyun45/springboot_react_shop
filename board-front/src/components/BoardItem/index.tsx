@@ -3,6 +3,7 @@ import './style.css';
 import { BoardListItem } from 'types/interface';
 import { useNavigate } from 'react-router-dom';
 import defaultProfileImage from 'assets/image/default-profile-picture-grey-male-icon.png';
+import { BOARD_DETAIL_PATH, BOARD_PATH } from 'constant';
 
 interface Props{
     boardListItem: BoardListItem
@@ -11,17 +12,17 @@ interface Props{
 // component: Board List Item 컴포넌트
 export default function BoardItem({ boardListItem }: Props) {
 
-// properties
+// state: properties
     const { boardNumber, title, content, boardTitleImage } = boardListItem;
     const { favoriteCount, replyCount, viewCount } = boardListItem;
     const { writeDatetime, writerNickname, writerProfileImage } = boardListItem;
 
 // function: 네비게이트 함수
-    // const navigator = useNavigate();
+    const navigator = useNavigate();
 
 // event handler: 게시글 아이템 클릭 이벤트 처리 함수
     const onClickHandler = () => {
-        // navigator(boardNumber);
+        navigator(BOARD_PATH() + '/' + BOARD_DETAIL_PATH(boardNumber));
     }
 
 // render: Board List Item 컴포넌트 렌더링
