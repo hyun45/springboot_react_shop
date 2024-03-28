@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hyun.boardback.dto.request.board.PatchBoardRequestDto;
 import com.hyun.boardback.dto.request.board.PostBoardRequestDto;
 import com.hyun.boardback.dto.request.board.PostReplyRequestDto;
 import com.hyun.boardback.dto.response.ResponseDto;
@@ -14,6 +15,7 @@ import com.hyun.boardback.dto.response.board.GetBoardResponseDto;
 import com.hyun.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.hyun.boardback.dto.response.board.GetReplyListResponseDto;
 import com.hyun.boardback.dto.response.board.IncreaseViewCountResponseDto;
+import com.hyun.boardback.dto.response.board.PatchBoardResponseDto;
 import com.hyun.boardback.dto.response.board.PostBoardResponseDto;
 import com.hyun.boardback.dto.response.board.PostReplyResponseDto;
 import com.hyun.boardback.dto.response.board.PutFavoriteResponseDto;
@@ -52,7 +54,7 @@ public class BoardServiceImplement  implements BoardService{
 
         try {
             boolean existedEmail = userRepository.existsByEmail(email);
-            if(!existedEmail) return PostBoardResponseDto.notExistUser();
+            if(!existedEmail) return PostBoardResponseDto.noExistUser();
 
             BoardEntity boardEntity = new BoardEntity(dto, email);
             boardRepository.save(boardEntity);
@@ -229,6 +231,42 @@ public class BoardServiceImplement  implements BoardService{
         }
 
         return DeleteBoardResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super PatchBoardResponseDto> patchBoard(PatchBoardRequestDto dto, Integer boardNumber, String email) {
+        
+        try {
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            if(boardEntity == null) return PatchBoardResponseDto.noExistBoard();
+
+            boolean existedUser = userRepository.existsByEmail(email);
+            if(!existedUser) return PatchBoardResponseDto.notExistUser();
+
+            String writerEmail = boardEntity.getWriterEmail();
+            boolean isWriter = writerEmail.equals(email);
+            if(!isWriter) return PatchBoardResponseDto.noPermission();
+
+            boardEntity.patchBoard(dto);
+            boardRepository.save(boardEntity);
+
+            imageRepository.deleteByBoardNumber(boardNumber);
+            List<String> boardImageList = dto.getBoardImageList();
+            List<ImageEntity> imageEntities = new ArrayList<>();
+
+            for(String image: boardImageList){
+                ImageEntity imageEntity = new ImageEntity(boardNumber, image);
+                imageEntities.add(imageEntity);
+            };
+
+            imageRepository.saveAll(imageEntities);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return PatchBoardResponseDto.success();
     }
     
     

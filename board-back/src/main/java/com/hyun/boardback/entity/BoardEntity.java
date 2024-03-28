@@ -10,6 +10,7 @@ import java.util.Date;
 import java.time.Instant;
 import java.text.SimpleDateFormat;
 
+import com.hyun.boardback.dto.request.board.PatchBoardRequestDto;
 import com.hyun.boardback.dto.request.board.PostBoardRequestDto;
 
 import lombok.AllArgsConstructor;
@@ -71,5 +72,10 @@ public class BoardEntity {
 
     public void increaseReplyCount(){
         this.replyCount++;
+    }
+
+    public void patchBoard(PatchBoardRequestDto dto){
+        this.title = dto.getTitle();
+        this.content = dto.getTitle();
     }
 }
