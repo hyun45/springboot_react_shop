@@ -235,10 +235,12 @@ export default function Header() {
 
         if(title && content)
 // render: 업로드 버튼 컴포넌트 렌더링
-            return <div className='upload-button' onClick={onUploadButtonClickHandler}>{'업로드'}</div>
+            // return <div className='upload-button' onClick={onUploadButtonClickHandler}>{'업로드'}</div>
+            return <div className='border border-solid border-black rounded-[40px] w-[100px] h-[30px] flex justify-center items-center bg-white bg-opacity-80 text-black text-opacity-60 text-14 font-normal leading-140% cursor-pointer hover:bg-black hover:bg-opacity-10' onClick={onUploadButtonClickHandler}>{'업로드'}</div>
 
 // render: 업로드 불가 버튼 컴포넌트 렌더링
-            return <div className='disable-button'>{'업로드'}</div>
+            // return <div className='disable-button'>{'업로드'}</div>
+            return <div className='rounded-[40px] w-[100px] h-[30px] flex justify-center items-center bg-black bg-opacity-5 text-14 font-normal leading-140% cursor-not-allowed'>{'업로드'}</div>
     
     };
 
@@ -266,16 +268,33 @@ export default function Header() {
     }, [loginUser]);
 
 // render: 헤더 레이아웃 렌더링
+    // return (
+    //     <div id='header'>
+    //         <div className='header-container'>
+    //             <div className='header-left-box' onClick={onLogoClickHandler}>
+    //                 <div className='icon-box'>
+    //                     <div className='icon logo-color-icon'></div>
+    //                 </div>
+    //                 <div className='header-logo'>{`Hyun's Blog`}</div>
+    //             </div>
+    //             <div className='header-right-box'>
+    //                 {(isAuthPage || isMainPage || isSearchPage || isBoardDetailPage) && <SearchButton />}
+    //                 {(isMainPage || isBoardDetailPage || isSearchPage || isUserPage) && <MyPageButton />}
+    //                 {(isBoardWritePage || isBoardUpdatePage) && <UploadButton />}
+    //             </div>
+    //         </div>
+    //     </div>
+    // )
     return (
-        <div id='header'>
-            <div className='header-container'>
-                <div className='header-left-box' onClick={onLogoClickHandler}>
-                    <div className='icon-box'>
-                        <div className='icon logo-color-icon'></div>
+        <div className='h-[30px] py-5 flex justify-center'>
+            <div className='w-[1200px] flex justify-between items-center'>
+                <div className='flex items-center gap-[10px] cursor-pointer' onClick={onLogoClickHandler}>
+                    <div className='w-6 h-6 flex item-center justify-center'>
+                        <div className='w-full h-full bg-center bg-100% bg-logo-color-icon'></div>
                     </div>
-                    <div className='header-logo'>{`Hyun's Blog`}</div>
+                    <div className='text-black text-[20px] font-normal leading-140% tracking-[-.4px]'>{`Hyun's Blog`}</div>
                 </div>
-                <div className='header-right-box'>
+                <div className='flex items-center gap-[15px]'>
                     {(isAuthPage || isMainPage || isSearchPage || isBoardDetailPage) && <SearchButton />}
                     {(isMainPage || isBoardDetailPage || isSearchPage || isUserPage) && <MyPageButton />}
                     {(isBoardWritePage || isBoardUpdatePage) && <UploadButton />}
