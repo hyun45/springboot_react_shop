@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.hyun.boardback.dto.response.ResponseDto;
 import com.hyun.boardback.dto.response.user.GetLoginUserResponseDto;
+import com.hyun.boardback.dto.response.user.GetUserResponseDto;
 import com.hyun.boardback.entity.UserEntity;
 import com.hyun.boardback.repository.UserRepository;
 import com.hyun.boardback.service.UserService;
@@ -24,7 +25,7 @@ public class UserServiceImplement implements UserService{
 
         try {
             userEntity = userRepository.findByEmail(email);
-            if(userEntity == null) return GetLoginUserResponseDto.notExistUser();
+            if(userEntity == null) return GetLoginUserResponseDto.noExistUser();
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -32,5 +33,22 @@ public class UserServiceImplement implements UserService{
         }
 
         return GetLoginUserResponseDto.success(userEntity);
+    }
+
+    @Override
+    public ResponseEntity<? super GetUserResponseDto> getUser(String email) {
+        
+        UserEntity userEntity = null;
+
+        try {
+            userEntity = userRepository.findByEmail(email);
+            if(userEntity == null) return GetUserResponseDto.noExistUser();
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetUserResponseDto.success(userEntity);
     }
 }
