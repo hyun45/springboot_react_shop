@@ -105,7 +105,7 @@ export default function Main() {
             return (
                 <div id='main-bottom-wrapper'>
                     <div className='main-bottom-container'>
-                        <div className='main-bottom-title'>{'최신 게시글'}</div>
+                        <div className='main-bottom-title'>{'전체 게시글'}</div>
                         <div className='main-bottom-content-box'>
                             <div className='main-bottom-latest-content'>
                                 {viewList.map(boardListItem =>     
