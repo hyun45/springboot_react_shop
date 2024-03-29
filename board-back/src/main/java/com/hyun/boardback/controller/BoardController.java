@@ -30,6 +30,7 @@ import com.hyun.boardback.dto.response.board.DeleteBoardResponseDto;
 import com.hyun.boardback.dto.response.board.PatchBoardResponseDto;
 import com.hyun.boardback.dto.response.board.GetTop3BoardListResponseDto;
 import com.hyun.boardback.dto.response.board.GetSearchBoardListResponseDto;
+import com.hyun.boardback.dto.response.board.GetUserBoardListResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -126,6 +127,13 @@ public class BoardController {
         @PathVariable(value = "preSearchWord", required = false) String preSearchWord){
      
         ResponseEntity<? super GetSearchBoardListResponseDto> response = boardService.getSearchBoardList(searchWord, preSearchWord);
+        return response;
+    }
+
+    @GetMapping("/user-board-list/{email}")
+    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(@PathVariable("email") String email){
+
+        ResponseEntity<? super GetUserBoardListResponseDto> response = boardService.getUserBoardList(email);
         return response;
     }
 }
