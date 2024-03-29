@@ -2,10 +2,11 @@ import axios from 'axios';
 import { LoginRequestDto, SignUpRequestDto } from './request/auth';
 import { LoginResponseDto, SignUpResponseDto } from './response/auth';
 import { ResponseDto } from './response';
-import { GetLoginUserResponseDto } from './response/user';
+import { GetLoginUserResponseDto, GetUserResponseDto, PatchNicknameResponseDto, PatchProfileImageResponseDto } from './response/user';
 import { PatchBoardRequestDto, PostBoardRequestDto, PostReplyRequestDto } from './request/board';
-import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, GetReplyListResponseDto, PutFavoriteResponseDto, PostReplyResponseDto, DeleteBoardResponseDto, PatchBoardResponseDto, GetLatestBoardListResponseDto, GetTop3BoardListResponseDto, GetSearchBoardListResponseDto } from './response/board';
+import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, GetReplyListResponseDto, PutFavoriteResponseDto, PostReplyResponseDto, DeleteBoardResponseDto, PatchBoardResponseDto, GetLatestBoardListResponseDto, GetTop3BoardListResponseDto, GetSearchBoardListResponseDto, GetUserBoardListResponseDto } from './response/board';
 import { GetPopularListResponseDto, GetRelationListResponseDto } from './response/search';
+import { PatchNicknameRequestDto, PatchProfileImageRequestDto } from './request/user';
 
 const DOMAIN = 'http://localhost:4000';
 
@@ -307,6 +308,74 @@ export const getRelationListRequest = async (searchWord: string) => {
     const result = await axios.get(GET_RELATION_LIST_URL(searchWord))
         .then(response => {
             const responseBody: GetRelationListResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            if(!error.response) return null;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+
+    return result;
+};
+
+const GET_USER_BOARD_LIST_URL = (email: string) => `${DOMAIN}/board/user-board-list/${email}`;
+
+export const getUserBoardListRequest = async (email: string) => {
+    const result = await axios.get(GET_USER_BOARD_LIST_URL(email))
+        .then(response => {
+            const responseBody: GetUserBoardListResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            if(!error.response) return null;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+
+    return result;
+};
+
+const GET_USER_URL = (email: string) => `${DOMAIN}/user/${email}`;
+
+export const getUserRequest = async (email: string) => {
+    const result = await axios.get(GET_USER_URL(email))
+        .then(response => {
+            const responseBody: GetUserResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            if(!error.response) return null;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+
+    return result;
+};
+
+const PATCH_NICKNAME_URL = () => `${DOMAIN}/user/nickname`;
+
+export const patchNicknameRequest = async (requestBody: PatchNicknameRequestDto, accessToken: string) => {
+    const result = await axios.patch(PATCH_NICKNAME_URL(), requestBody, authorization(accessToken))
+        .then(response => {
+            const responseBody: PatchNicknameResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            if(!error.response) return null;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+
+    return result;
+};
+
+const PATCH_PROFILE_IMAGE_URL = () => `${DOMAIN}/user/profile-image`;
+
+export const patchProfileImageRequest = async (requestBody: PatchProfileImageRequestDto, accessToken: string) => {
+    const result = await axios.patch(PATCH_PROFILE_IMAGE_URL(), requestBody, authorization(accessToken))
+        .then(response => {
+            const responseBody: PatchProfileImageResponseDto = response.data;
             return responseBody;
         })
         .catch(error => {

@@ -49,7 +49,7 @@ public class UserController {
         return response;
     }
 
-    @PatchMapping("/profileImage")
+    @PatchMapping("/profile-image")
     public ResponseEntity<? super PatchProfileImageResponseDto> patchProfileImage(@RequestBody @Valid PatchProfileImageRequestDto requestBody, @AuthenticationPrincipal String email){
         
         ResponseEntity<? super PatchProfileImageResponseDto> response = userService.patchProfileImage(requestBody, email);
