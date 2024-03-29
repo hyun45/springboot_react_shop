@@ -151,15 +151,16 @@ export default function Header() {
 
 // render: 로그아웃 버튼 컴포넌트 렌더링
         if(isLogin && (userEmail === loginUser?.email))
-            return <div className='logout-button' onClick={onLogoutButtonClickHandler}>{'로그아웃'}</div>;
+            // return <div className='logout-button' onClick={onLogoutButtonClickHandler}>{'로그아웃'}</div>;
+            return <div className='rounded-[40px] w-[100px] h-[30px] flex justify-center items-center bg-black bg-opacity-30 text-14 font-normal leading-140% cursor-pointer hover:bg-opacity-10' onClick={onLogoutButtonClickHandler}>{'로그아웃'}</div>;
 
         if(isLogin)
 // render: 마이페이지 버튼 컴포넌트 렌더링
-            return <div className='mypage-button' onClick={onMyPageButtonClickHandler}>{'마이페이지'}</div>;
-
+            // return <div className='mypage-button' onClick={onMyPageButtonClickHandler}>{'마이페이지'}</div>;
+            return <div className='border border-solid border-black rounded-[40px] w-[100px] h-[30px] flex justify-center items-center bg-white bg-opacity-80 text-black text-opacity-60 text-14 font-normal leading-140% cursor-pointer hover:bg-black hover:bg-opacity-10' onClick={onMyPageButtonClickHandler}>{'마이페이지'}</div>;
 // render: 로그인 버튼 컴포넌트 렌더링
-            return <div className='login-button' onClick={onLoginButtonClickHandler}>{'로그인'}</div>;
-    };
+            // return <div className='login-button' onClick={onLoginButtonClickHandler}>{'로그인'}</div>;
+            return <div className='rounded-[40px] w-[100px] h-[30px] flex justify-center items-center bg-black bg-opacity-30 text-14 font-normal leading-140% cursor-pointer hover:bg-opacity-10' onClick={onLoginButtonClickHandler}>{'로그인'}</div>;    };
 
 // component: 업로드 버튼 컴포넌트
     const UploadButton = () => {
