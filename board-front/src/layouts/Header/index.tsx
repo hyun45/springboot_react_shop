@@ -95,17 +95,30 @@ export default function Header() {
 
         if(!status)
 // render: 검색 버튼 컴포넌트 렌더링 (기본 상태 (false))
+            // return (
+            //     <div className='icon-button' onClick={onSearchButtonClickHandler}>
+            //         <div className='icon search-icon'></div>
+            //     </div>
+            // );
             return (
-                <div className='icon-button' onClick={onSearchButtonClickHandler}>
-                    <div className='icon search-icon'></div>
+                <div className='rounded-50% w-6 h-6 flex items-center justify-center cursor-pointer' onClick={onSearchButtonClickHandler}>
+                    <div className='w-full h-full bg-100% bg-50% bg-search-icon'></div>
                 </div>
             );
 // render: 검색 버튼 컴포넌트 렌더링 (클릭 상태 (true))
+            // return (
+            //     <div className='header-search-input-box'>
+            //         <input className='header-search-input' type='text' placeholder='검색어를 입력해주세요.' value={word} onChange={onSearchWordChangeHandler} onKeyDown={onSearchWordKeyDownHander}/>
+            //         <div ref={searchButtonRef} className='icon-button' onClick={onSearchButtonClickHandler}>
+            //             <div className='icon search-icon'></div>
+            //         </div>
+            //     </div>
+            // );
             return (
-                <div className='header-search-input-box'>
-                    <input className='header-search-input' type='text' placeholder='검색어를 입력해주세요.' value={word} onChange={onSearchWordChangeHandler} onKeyDown={onSearchWordKeyDownHander}/>
-                    <div ref={searchButtonRef} className='icon-button' onClick={onSearchButtonClickHandler}>
-                        <div className='icon search-icon'></div>
+                <div className='border border-solid border-black border-opacity-20 rounded-20 px-5 py-[5px] w-[250px] h-[30px] flex justify-center items-center gap-1'>
+                    <input className='flex-1 border-0 bg-transparent outline-none text-black text-14 font-normal leading-140%' type='text' placeholder='검색어를 입력해주세요.' value={word} onChange={onSearchWordChangeHandler} onKeyDown={onSearchWordKeyDownHander}/>
+                    <div ref={searchButtonRef} className='rounded-50% w-6 h-6 flex items-center justify-center cursor-pointer' onClick={onSearchButtonClickHandler}>
+                        <div className='w-full h-full bg-50% bg-100% bg-search-icon'></div>
                     </div>
                 </div>
             );
