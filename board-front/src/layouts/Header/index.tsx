@@ -289,7 +289,7 @@ export default function Header() {
         <div className='h-[30px] py-5 flex justify-center'>
             <div className='w-[1200px] flex justify-between items-center'>
                 <div className='flex items-center gap-[10px] cursor-pointer' onClick={onLogoClickHandler}>
-                    <div className='w-6 h-6 flex item-center justify-center'>
+                    <div className='w-6 h-6 flex items-center justify-center'>
                         <div className='w-full h-full bg-center bg-100% bg-logo-color-icon'></div>
                     </div>
                     <div className='text-black text-[20px] font-normal leading-140% tracking-[-.4px]'>{`Hyun's Blog`}</div>
