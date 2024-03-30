@@ -15,7 +15,8 @@ module.exports = {
       'eye-on-icon': "url(assets/image/eye-on.png)",
       'logo-color-icon': "url(assets/image/logo-color.png)",
       'github-icon': "url(assets/image/github.png)",
-      'search-icon': "url(assets/image/search.png)"
+      'search-icon': "url(assets/image/search.png)",
+      'expand-right-icon': "url(assets/image/right-icon.png)"
     },
     lineHeight: {
       '140%': '140%',
