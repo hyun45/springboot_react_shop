@@ -28,18 +28,33 @@ export default function ReplyItem({replyListItem}: Props) {
 
 
 // render: Reply List Item 렌더링
+    // return (
+    //     <div className='reply-list-item'>
+    //         <div className='reply-list-item-top'>
+    //             <div className='reply-list-item-profile-box'>
+    //                 <div className='reply-list-item-profile-image' style={{backgroundImage: `url(${profileImage ? profileImage : defaultProfileImage})`}}></div>
+    //             </div>
+    //             <div className='reply-list-item-nickname'>{nickname}</div>
+    //             <div className='reply-list-item-divider'>{'\|'}</div>
+    //             <div className='reply-list-item-time'>{getElapsedTime()}</div>
+    //         </div>
+    //         <div className='reply-list-item-main'>
+    //             <div className='reply-list-item-content'>{content}</div>
+    //         </div>
+    //     </div>
+    // )
     return (
-        <div className='reply-list-item'>
-            <div className='reply-list-item-top'>
-                <div className='reply-list-item-profile-box'>
-                    <div className='reply-list-item-profile-image' style={{backgroundImage: `url(${profileImage ? profileImage : defaultProfileImage})`}}></div>
+        <div className='flex flex-col gap-[10px]'>
+            <div className='flex items-center gap-[6px]'>
+                <div className='w-[30px] h-[30px]'>
+                    <div className='rounded-50% w-full h-full bg-50% bg-100%' style={{backgroundImage: `url(${profileImage ? profileImage : defaultProfileImage})`}}></div>
                 </div>
-                <div className='reply-list-item-nickname'>{nickname}</div>
-                <div className='reply-list-item-divider'>{'\|'}</div>
-                <div className='reply-list-item-time'>{getElapsedTime()}</div>
+                <div className='text-black text-opacity-60 text-[16px] font-medium leading-140%'>{nickname}</div>
+                <div className='text-black text-opacity-30 text-[16px] font-medium leading-140%'>{'\|'}</div>
+                <div className='text-black text-opacity-30 text-[16px] font-medium leading-140%'>{getElapsedTime()}</div>
             </div>
-            <div className='reply-list-item-main'>
-                <div className='reply-list-item-content'>{content}</div>
+            <div>
+                <div className='text-black text-opacity-80 text-[18px] font-medium leading-140%'>{content}</div>
             </div>
         </div>
     )
