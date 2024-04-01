@@ -1,6 +1,7 @@
 ## springboot_react_blog
 
 http://3.83.241.42:3000/
+이미지 파일 처리가 되지 않아 수정하여 다시 배포 예정
 
 ## 개발환경
 - Visual Studio Code
