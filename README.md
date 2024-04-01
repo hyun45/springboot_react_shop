@@ -1,4 +1,6 @@
-## springboot_react_shop
+## springboot_react_blog
+
+http://3.83.241.42:3000/
 
 ## 개발환경
 - Visual Studio Code
