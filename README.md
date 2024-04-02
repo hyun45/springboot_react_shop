@@ -14,6 +14,28 @@ www.hyuns.blog
 - react(typescript)
 
 
+## ERD
+<img src="https://github.com/hyun45/springboot_react_shop/assets/159392652/6a6e9895-b724-48fc-88b8-1ff500534e0b" />
+
+## View
+CREATE VIEW board_list_view AS
+SELECT 
+    B.board_number AS board_number, 
+    B.title AS title, B.content AS content, 
+    I.image AS title_image, 
+    B.favorite_count AS favorite_count, 
+    B.reply_count AS reply_count, 
+    B.view_count AS view_count, 
+    B.write_datetime AS write_datetime, 
+    B.writer_email AS writer_email,
+    U.nickname AS writer_nickname, 
+    U.profile_image AS writer_profile_image 
+FROM board AS B INNER JOIN user AS U
+ON B.writer_email = U.email
+LEFT JOIN (SELECT board_number, ANY_VALUE(image) AS image FROM image GROUP BY board_number) AS I
+ON B.board_number = I.board_number;
+
+
 ## Preview
 
 <html>
